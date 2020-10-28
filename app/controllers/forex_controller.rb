@@ -1,22 +1,27 @@
 class ForexController < ActionController::Base
 
-def forex
+def first_currency
 
   @forex_url = "https://api.exchangerate.host/symbols"
   raw_data = open(@forex_url).read
   parsed_data = JSON.parse(raw_data)
-  symbols_array = parsed_data.fetch("symbols").keys
-  # first_result = symbols_array.at(0)
-  # @first_symbol=first_result
+  @symbols_array = parsed_data.fetch("symbols").keys
 
-# so now that I have the first 
-
-
-  render({ :template => "/something_templates/forex.html.erb"})
+  render({ :template => "/currency_templates/first_currency.html.erb"})
 end
 
+def second_currency
 
+  @currency_from_user = params.fetch("")
 
+  # @address_from_user = params.fetch("user_street_address")
+
+  @forex_url = "https://api.exchangerate.host/symbols" + @currency_from_user + ""
+  raw_data = open(@forex_url).read
+  parsed_data = JSON.parse(raw_data)
+  @symbols_array = parsed_data.fetch("symbols").keys
+
+  render({ :template => "/currency_templates/first_currency.html.erb"})
 
 
 end
